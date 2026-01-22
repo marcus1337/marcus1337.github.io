@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Hello!</title>
+  <meta name="description" content="Marcus — software developer. Links and projects." />
+  <style>
+    :root { --bg:#0b0c0f; --fg:#e9eefc; --muted:#aab3cf; --line:#24283a; }
+    @media (prefers-color-scheme: light){
+      :root { --bg:#ffffff; --fg:#121424; --muted:#4c556e; --line:#e6e8f0; }
+    }
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial;
+      display:grid; place-items:center;
+    }
+    main{ width:min(720px, 92vw); padding:28px 18px; }
+    h1{ margin:0 0 8px; font-size:clamp(28px, 4vw, 40px); letter-spacing:.2px; }
+    p{ margin:0 0 18px; color:var(--muted); line-height:1.5; }
+    nav{ display:flex; flex-wrap:wrap; gap:10px; }
+    a{
+      color:inherit; text-decoration:none;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:12px;
+    }
+    a:hover{ text-decoration:underline; text-underline-offset:3px; }
+    footer{ margin-top:18px; color:var(--muted); font-size:13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>marcus1337</h1>
+    <p>Software developer in Sweden. I build games/tools and small web things.</p>
+
+    <nav>
+      <a href="https://marcus1337.github.io/about/">About</a>
+      <a href="https://github.com/marcus1337">GitHub</a>
+      <!-- Optional: add more later -->
+      <!-- <a href="/projects/">Projects</a> -->
+      <!-- <a href="mailto:you@example.com">Email</a> -->
+    </nav>
+
+    <footer>
+      © <span id="y"></span>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
