@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hello</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, #1f1f1f, #2c2c2c);
+      padding: 3rem 1.5rem;
+      animation: fadeIn 1s ease-in-out;
+      border-bottom: 2px solid #333;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .info-grid h2 {
+      font-size: 1.3rem;
+      color: #90caf9;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .info-grid p {
+      font-size: 0.95rem;
+      color: #cccccc;
+      transition: color 0.3s ease;
+    }
+
+    .info-grid div:hover p {
+      color: #ffffff;
+    }
+
+    .section {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 2rem;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .half {
+      background: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      flex: 1 1 500px;
+      max-width: 700px;
+      padding: 2rem;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .half:nth-child(1) { animation-delay: 0.2s; }
+    .half:nth-child(2) { animation-delay: 0.4s; }
+
+    h2 {
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+    }
+
+    .games-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .games-table th,
+    .games-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #333;
+      text-align: left;
+    }
+
+    .games-table a {
+      color: #90caf9;
+      text-decoration: none;
+    }
+
+    .games-table a:hover {
+      text-decoration: underline;
+    }
+
+    .email-link,
+    .discord-link {
+      color: #90caf9;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .email-link:hover,
+    .discord-link:hover {
+      text-decoration: underline;
+      color: #ffffff;
+    }
+
+    .contact-icons {
+      margin-top: 2rem;
+    }
+
+    .icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #3b82f6;
+      color: white;
+      text-decoration: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .icon-button:hover {
+      background-color: #2563eb;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        flex-direction: column;
+        padding: 1rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="info-grid">
+      <div>
+        <h2>Who</h2>
+        <p>A solo indie dev from Sweden, obsessed with systems, strategy, and experimentation.</p>
+      </div>
+      <div>
+        <h2>What</h2>
+        <p>I make games — usually minimal, sometimes strange, always thoughtful.</p>
+      </div>
+      <div>
+        <h2>When</h2>
+        <p>Late nights, early mornings.</p>
+      </div>
+      <div>
+        <h2>How</h2>
+        <p>Built from scratch.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="section" id="projects">
+    <div class="half">
+      <h2>Games</h2>
+      <table class="games-table">
+        <tr>
+          <th>Year</th>
+          <th>Title</th>
+          <th>Platform</th>
+        </tr>
+        <tr>
+          <td>2023</td>
+          <td><a href="https://store.steampowered.com/app/2293320/Checkerboard_Collection/" target="_blank">Checkerboard Collection</a></td>
+          <td>PC</td>
+        </tr>
+        <tr>
+          <td>2021</td>
+          <td><a href="https://store.steampowered.com/app/1680300/Spades/" target="_blank">Spades</a></td>
+          <td>PC</td>
+        </tr>
+        <tr>
+          <td>2018</td>
+          <td><a href="https://play.google.com/store/apps/details?id=com.fullrune.areashiftertwo&hl=en" target="_blank">Area Shifter 2</a></td>
+          <td>Android</td>
+        </tr>
+        <tr>
+          <td>2018</td>
+          <td><a href="https://play.google.com/store/apps/details?id=test.morris&hl=en" target="_blank">Nine Men's Morris</a></td>
+          <td>Android</td>
+        </tr>
+        <tr>
+          <td>2017</td>
+          <td><a href="https://www.microsoft.com/en-us/p/half-robot/9p93l2bhq7jx" target="_blank">Half Robot</a></td>
+          <td>PC</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="contact">
+    <div class="half">
+      <h2>Contact</h2>
+      <p><strong>Discord:</strong> 
+        <a class="discord-link" href="https://discord.gg/Q26Hh2W2Mj" target="_blank">xxrandom</a>
+      </p>
+      <p><strong>Email:</strong> 
+        <a class="email-link" href="mailto:clientinfo1337@gmail.com">clientinfo1337@gmail.com</a>
+      </p>
+      <div class="contact-icons">
+        <a class="icon-button" href="https://github.com/marcus1337" target="_blank" title="GitHub">
+          <span class="material-icons">code</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
