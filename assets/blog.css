@@ -59,6 +59,19 @@ pre code { background: none; border-radius: 0; padding: 0; }
 .highlight .k, .highlight .kd, .highlight .kt { color: var(--accent); font-weight: 600; }
 .post-body table { display: block; max-width: 100%; overflow: auto; border-collapse: collapse; margin: 24px 0; }
 .post-body th, .post-body td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+.post-body details { margin: 18px 0 24px; border: 1px solid var(--line); border-radius: 6px; padding: 0 16px; }
+.post-body summary { cursor: pointer; min-height: 44px; padding: 9px 0; color: var(--muted); }
+.post-body summary:hover { color: var(--accent); }
+.post-body summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.post-body details[open] > summary { margin-bottom: 10px; }
+.post-body details pre { margin-top: 12px; }
+kbd { font-family: ui-monospace, monospace; font-size: .85em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: var(--panel); }
+mark { color: #21200e; background: #f5e6a1; padding: .1em .2em; border-radius: 2px; }
+.mermaid-figure { margin: 24px 0; }
+.mermaid-graph { padding: 16px; border: 1px solid var(--line); border-radius: 6px; overflow: auto; text-align: center; }
+.mermaid-graph svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.mermaid-figure details { margin-top: 8px; }
+.footnotes { color: var(--muted); font-size: .9em; border-top: 1px solid var(--line); margin-top: 32px; padding-top: 16px; }
 .back-link { margin-top: 42px; }
 .back-link a { display: inline-flex; align-items: center; min-height: 44px; }
 footer { border-top: 1px solid var(--line); margin-top: 44px; padding-top: 18px; font-size: 13px; }

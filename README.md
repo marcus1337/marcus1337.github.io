@@ -34,6 +34,29 @@ To keep a post unpublished, keep its file in `_drafts/`; move it to
 be placed in `assets/blog/` and linked as
 `![Description](/assets/blog/image.png)`.
 
+The first post, `_posts/2026-10-04-my-first-post-thanks-chatgpt.md`, is a
+working formatting demo: code, tables, lists, images, quotes, footnotes,
+expandable notes and diagrams. Copy examples from it into new posts.
+
+### Mermaid diagrams
+
+Add `mermaid: true` below `title:` in the post's opening YAML block, then
+write a fenced diagram:
+
+````markdown
+```mermaid
+flowchart TB
+    Idea --> Prototype
+    Prototype --> Playtest
+```
+````
+
+The browser loads Mermaid 12.1.0 from jsDelivr only on enabled posts.
+Diagrams follow the system colour scheme and have an expandable source.
+If the library cannot load or a diagram has invalid syntax, its source
+remains readable. Use `accTitle:` and `accDescr:` in a diagram to describe
+it for screen readers; the demo includes examples.
+
 ## First-time setup
 
 The Blog button, list, article layout, and configuration are ready.

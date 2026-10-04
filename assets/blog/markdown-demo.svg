@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" role="img" aria-labelledby="title desc">
+  <title id="title">Idea, code, play</title>
+  <desc id="desc">Three rounded blocks connected by arrows, on a pale background.</desc>
+  <rect width="640" height="180" rx="12" fill="#edf2f8"/>
+  <g fill="none" stroke="#536b89" stroke-width="2">
+    <path d="M184 90h42m-8-6 8 6-8 6M408 90h42m-8-6 8 6-8 6"/>
+  </g>
+  <g stroke="#a9bbcf" fill="#fff">
+    <rect x="32" y="48" width="152" height="84" rx="8"/>
+    <rect x="244" y="48" width="164" height="84" rx="8"/>
+    <rect x="468" y="48" width="140" height="84" rx="8"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="24" font-weight="600" fill="#253b55" text-anchor="middle">
+    <text x="108" y="99">idea</text>
+    <text x="326" y="99">code</text>
+    <text x="538" y="99">play</text>
+  </g>
+</svg>
