@@ -3,617 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#101411" />
-  <meta name="description" content="marcus1337 — software developer in Sweden. Games, tools, and small web experiments." />
-  <title>marcus1337 — games, tools &amp; small worlds</title>
+  <meta name="color-scheme" content="light dark" />
+  <title>marcus1337</title>
+  <meta name="description" content="Marcus — software developer. Links and projects." />
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #101411;
-      --fg: #edf0e7;
-      --muted: #a6afa5;
-      --accent: #d4eea8;
-      --line: #30392f;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #0b0c0f;
+      --fg: #e9eefc;
+      --muted: #aab3cf;
+      --line: #24283a;
+      --hover: #151923;
+      --focus: #a7c8ff;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #ffffff;
+        --fg: #121424;
+        --muted: #4c556e;
+        --line: #e6e8f0;
+        --hover: #f5f6fa;
+        --focus: #385a99;
+      }
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--fg); }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { font: inherit; }
-    a { color: inherit; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-    ::selection { background: var(--accent); color: var(--bg); }
-    .shell { width: min(1240px, calc(100% - 96px)); margin: auto; }
-    .site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 38px 0; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 650; letter-spacing: -.5px; }
-    .brand-mark { width: 20px; height: 20px; color: var(--accent); }
-    .header-note, .eyebrow, .sketch-number, .footer-note {
-      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
-      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+      display: grid;
+      place-items: center;
     }
-    .header-note { color: var(--muted); }
-    main { min-height: calc(100svh - 210px); display: grid; align-items: center; padding: 38px 0 58px; }
-    .hero { display: grid; grid-template-columns: 1.02fr 1fr; align-items: center; gap: 36px; }
-    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--muted); margin: 0 0 24px; }
-    .eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
-    h1 { margin: 0; font-size: clamp(48px, 5.5vw, 76px); font-weight: 560; line-height: 1.06; letter-spacing: -.065em; }
-    h1 span { color: var(--accent); }
-    .intro { max-width: 390px; color: var(--muted); font-size: 16px; line-height: 1.8; margin: 28px 0 32px; }
-    .links { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
-    .link { display: inline-flex; align-items: center; justify-content: center; gap: 22px; min-height: 50px; padding: 0 22px; border: 1px solid var(--line); border-radius: 5px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background .15s, border-color .15s; }
-    .link-primary { background: var(--accent); color: #182014; border-color: var(--accent); }
-    .link-primary:hover { background: #e1f7bd; border-color: #e1f7bd; }
-    .link-secondary:hover { background: #20271f; border-color: #66735f; }
-    .link svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .sketch { min-width: 0; margin: 0; padding-top: 6px; }
-    .sketch-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); padding: 0 18px; }
-    .sketch-title { margin: 0; font-size: 12px; font-weight: 450; }
-    .sketch-number { font-size: 10px; color: #9da999; }
-    .scene { display: block; width: 100%; height: auto; overflow: visible; }
-    .scene .tile-shape { transition: transform .17s ease; }
-    .scene .top-face { stroke: #111b15; stroke-width: 1.2; stroke-linejoin: round; transition: stroke .17s; }
-    .scene.enhanced .tile { cursor: pointer; outline: none; }
-    .tile-hidden { display: none; }
-    .scene.enhanced .tile:hover .tile-shape, .scene.enhanced .tile:focus-visible .tile-shape { transform: translateY(-5px); }
-    .scene.enhanced .tile:hover .top-face { stroke: #c4dfa2; }
-    .scene.enhanced .tile:focus-visible .top-face { stroke: #fff; stroke-width: 3; }
-    .sketch-caption { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 0 18px; margin-top: -12px; }
-    .sketch-hint { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
-    .controls { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .controls button { min-height: 44px; padding: 0 12px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #c4cebd; font-size: 11px; cursor: pointer; }
-    .controls button:hover { background: #222c21; border-color: #384735; color: var(--accent); }
-    [hidden] { display: none !important; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-    .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 0 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
-    .footer-note { font-size: 10px; letter-spacing: 1px; }
-    @media (min-width: 1500px) { main { min-height: 690px; } }
-    @media (max-width: 1000px) {
-      .shell { width: calc(100% - 64px); }
-      .hero { gap: 16px; }
-      h1 { font-size: clamp(46px, 5.7vw, 64px); }
-      .intro { font-size: 15px; }
-      .sketch-caption { flex-wrap: wrap; gap: 4px; }
+    main { width: min(720px, 92vw); padding: 28px 18px; }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.5px; }
+    p { margin: 0 0 18px; color: var(--muted); line-height: 1.6; }
+    nav { display: flex; flex-wrap: wrap; gap: 10px; }
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: inherit;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: 12px;
+      transition: background-color .15s, border-color .15s;
     }
-    @media (max-width: 720px) {
-      .shell { width: calc(100% - 40px); }
-      .site-header { padding: 27px 0; }
-      .header-note { font-size: 9px; letter-spacing: 1px; }
-      main { min-height: 0; padding: 36px 0 40px; }
-      .hero { grid-template-columns: 1fr; gap: 48px; }
-      .eyebrow { font-size: 10px; margin-bottom: 20px; }
-      h1 { font-size: clamp(44px, 9.4vw, 66px); }
-      .intro { margin: 23px 0 26px; max-width: 380px; }
-      .sketch { width: min(100%, 520px); justify-self: center; }
-      .sketch-header, .sketch-caption { padding: 0 8px; }
-      .sketch-caption { justify-content: space-between; }
-      .site-footer { padding: 21px 0; }
+    a:hover {
+      background: var(--hover);
+      border-color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    @media (max-width: 380px) {
-      .header-note { display: none; }
-      .links { gap: 10px; }
-      .link { padding: 0 16px; gap: 14px; font-size: 13px; }
-      .footer-note { font-size: 9px; }
-    }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+    a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+    footer { margin-top: 18px; color: var(--muted); font-size: 13px; }
+    @media (prefers-reduced-motion: reduce) { a { transition: none; } }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="site-header">
-      <div class="brand">
-        <svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z M3 7l9 5 9-5 M12 12v10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
-        marcus1337
-      </div>
-      <span class="header-note">Personal projects</span>
-    </header>
-
-    <main>
-      <div class="hero">
-        <section aria-labelledby="intro-title">
-          <p class="eyebrow">Software developer / Sweden</p>
-          <h1 id="intro-title">Games, tools<br>&amp; <span>small worlds.</span></h1>
-          <p class="intro">I build games, tools, and small web experiments. This is where some of them end up.</p>
-          <nav class="links" aria-label="Main links">
-            <a class="link link-primary" href="https://marcus1337.github.io/about/">Explore my projects <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
-            <a class="link link-secondary" href="https://github.com/marcus1337">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
-          </nav>
-        </section>
-
-        <figure class="sketch" aria-labelledby="sketch-title">
-          <div class="sketch-header">
-            <h2 class="sketch-title" id="sketch-title">A tiny sandbox.</h2>
-            <span class="sketch-number" id="grid-size" aria-hidden="true">7 × 7</span>
-          </div>
-          <svg class="scene" id="sandbox" viewBox="0 0 620 425" role="img" aria-label="An isometric landscape of green blocks." xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="ground-glow"><stop stop-color="#283921" stop-opacity=".6" /><stop offset="1" stop-color="#101411" stop-opacity="0" /></radialGradient>
-              <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#a1b390" opacity=".17" /></pattern>
-            </defs>
-            <ellipse cx="310" cy="240" rx="305" ry="190" fill="url(#ground-glow)" aria-hidden="true" />
-            <rect x="30" y="35" width="560" height="345" fill="url(#dots)" aria-hidden="true" />
-            <path id="scene-frame" d="M48 65H30v18 M572 65h18v18 M30 342v18h18 M590 342v18h-18" fill="none" stroke="#45513e" stroke-width="1" aria-hidden="true" />
-            <path id="board-shadow" d="m310 103 227 128-227 132L83 231Z" fill="#0a100b" transform="translate(0 12)" aria-hidden="true" />
-        <g class="tile" data-row="0" data-col="0" transform="translate(310 100)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="1" transform="translate(342 118)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="2" transform="translate(374 136)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="3" transform="translate(406 154)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="4" transform="translate(438 172)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="5" transform="translate(470 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="0" data-col="6" transform="translate(502 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="0" transform="translate(278 118)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="1" transform="translate(310 136)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="2" transform="translate(342 154)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="3" transform="translate(374 172)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="4" transform="translate(406 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="5" transform="translate(438 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="1" data-col="6" transform="translate(470 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="0" transform="translate(246 136)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="1" transform="translate(278 154)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="2" transform="translate(310 172)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,-10 0,8 0,36 -32,18" fill="#526f43" />
-            <polygon class="right-face" points="0,8 32,-10 32,18 0,36" fill="#3d5733" />
-            <polygon class="top-face" points="0,-28 32,-10 0,8 -32,-10" fill="#8bb574" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="3" transform="translate(342 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,-10 0,8 0,36 -32,18" fill="#526f43" />
-            <polygon class="right-face" points="0,8 32,-10 32,18 0,36" fill="#3d5733" />
-            <polygon class="top-face" points="0,-28 32,-10 0,8 -32,-10" fill="#8bb574" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="4" transform="translate(374 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="5" transform="translate(406 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="2" data-col="6" transform="translate(438 244)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="0" transform="translate(214 154)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="1" transform="translate(246 172)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="2" transform="translate(278 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,-30 0,-12 0,36 -32,18" fill="#8caf69" />
-            <polygon class="right-face" points="0,-12 32,-30 32,18 0,36" fill="#688849" />
-            <polygon class="top-face" points="0,-48 32,-30 0,-12 -32,-30" fill="#d4eea8" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="3" transform="translate(310 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="4" transform="translate(342 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,-10 0,8 0,36 -32,18" fill="#526f43" />
-            <polygon class="right-face" points="0,8 32,-10 32,18 0,36" fill="#3d5733" />
-            <polygon class="top-face" points="0,-28 32,-10 0,8 -32,-10" fill="#8bb574" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="5" transform="translate(374 244)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="3" data-col="6" transform="translate(406 262)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="0" transform="translate(182 172)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="1" transform="translate(214 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="2" transform="translate(246 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="3" transform="translate(278 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,-10 0,8 0,36 -32,18" fill="#526f43" />
-            <polygon class="right-face" points="0,8 32,-10 32,18 0,36" fill="#3d5733" />
-            <polygon class="top-face" points="0,-28 32,-10 0,8 -32,-10" fill="#8bb574" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="4" transform="translate(310 244)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="5" transform="translate(342 262)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="4" data-col="6" transform="translate(374 280)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="0" transform="translate(150 190)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="1" transform="translate(182 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="2" transform="translate(214 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="3" transform="translate(246 244)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,8 0,26 0,36 -32,18" fill="#354a32" />
-            <polygon class="right-face" points="0,26 32,8 32,18 0,36" fill="#293b28" />
-            <polygon class="top-face" points="0,-10 32,8 0,26 -32,8" fill="#526949" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="4" transform="translate(278 262)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="5" transform="translate(310 280)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="5" data-col="6" transform="translate(342 298)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="0" transform="translate(118 208)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="1" transform="translate(150 226)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="2" transform="translate(182 244)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="3" transform="translate(214 262)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="4" transform="translate(246 280)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="5" transform="translate(278 298)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-        <g class="tile" data-row="6" data-col="6" transform="translate(310 316)">
-          <g class="tile-shape">
-            <polygon class="left-face" points="-32,18 0,36 0,36 -32,18" fill="#202a24" />
-            <polygon class="right-face" points="0,36 32,18 32,18 0,36" fill="#19221d" />
-            <polygon class="top-face" points="0,0 32,18 0,36 -32,18" fill="#28352d" />
-          </g>
-        </g>
-          </svg>
-          <figcaption class="sketch-caption">
-            <p class="sketch-hint" id="sketch-hint">A small world, made of simple shapes.</p>
-            <div class="controls" id="sketch-controls" hidden>
-              <button type="button" id="shuffle">Shuffle</button>
-              <button type="button" id="reset">Reset</button>
-            </div>
-          </figcaption>
-          <p class="sr-only" id="sandbox-help">Use the arrow keys to select a tile. Press Enter or Space to raise or lower it. Tab moves out of the sandbox.</p>
-          <p class="sr-only" id="sandbox-status" role="status" aria-live="polite" aria-atomic="true"></p>
-        </figure>
-      </div>
-    </main>
-
-    <footer class="site-footer">
-      <span>© <span id="year">2026</span> marcus1337</span>
-      <span class="footer-note">Room for experiments.</span>
-    </footer>
-  </div>
-
+  <main>
+    <h1>marcus1337</h1>
+    <p>Software developer in Sweden. I build games, tools and small web things.</p>
+    <nav aria-label="Main links">
+      <a href="https://marcus1337.github.io/about/">About</a>
+      <a href="https://github.com/marcus1337">GitHub</a>
+    </nav>
+    <footer>© <span id="y">2026</span></footer>
+  </main>
   <script>
-    (() => {
-      'use strict';
-      document.getElementById('year').textContent = new Date().getFullYear();
-      const scene = document.getElementById('sandbox');
-      const tiles = [...scene.querySelectorAll('.tile')];
-      const original = ['0000000', '0011000', '0122100', '0131210', '0012100', '0001000', '0000000'].join('').split('').map(Number);
-      const palette = [
-        { height: 0, top: '#28352d', left: '#202a24', right: '#19221d' },
-        { height: 10, top: '#526949', left: '#354a32', right: '#293b28' },
-        { height: 28, top: '#8bb574', left: '#526f43', right: '#3d5733' },
-        { height: 48, top: '#d4eea8', left: '#8caf69', right: '#688849' }
-      ];
-      let world = [...original];
-      let active = 24;
-      let size = 7;
-      const status = document.getElementById('sandbox-status');
-
-      function drawTile(index) {
-        const tile = tiles[index];
-        const style = palette[world[index]];
-        const h = style.height;
-        const faces = [
-          ['.left-face', `-32,${18-h} 0,${36-h} 0,36 -32,18`, style.left],
-          ['.right-face', `0,${36-h} 32,${18-h} 32,18 0,36`, style.right],
-          ['.top-face', `0,${-h} 32,${18-h} 0,${36-h} -32,${18-h}`, style.top]
-        ];
-        faces.forEach(([selector, points, fill]) => {
-          const face = tile.querySelector(selector);
-          face.setAttribute('points', points);
-          face.setAttribute('fill', fill);
-        });
-        tile.setAttribute('aria-label', `Tile ${Number(tile.dataset.row)+1}, ${Number(tile.dataset.col)+1}: ${world[index] ? 'raised' : 'flat'}`);
-        tile.setAttribute('aria-pressed', String(world[index] > 0));
-      }
-
-      // One tab stop for the entire sketch; arrow keys move within it.
-      function select(index, focus = false) {
-        tiles[active].setAttribute('tabindex', '-1');
-        active = index;
-        tiles[active].setAttribute('tabindex', '0');
-        if (focus) tiles[active].focus({ preventScroll: true });
-      }
-
-      function toggle(index) {
-        world[index] = world[index] ? 0 : 2;
-        drawTile(index);
-        status.textContent = `Tile ${Number(tiles[index].dataset.row)+1}, ${Number(tiles[index].dataset.col)+1} ${world[index] ? 'raised' : 'lowered'}.`;
-      }
-
-      tiles.forEach((tile, index) => {
-        tile.setAttribute('role', 'button');
-        tile.setAttribute('tabindex', index === active ? '0' : '-1');
-        tile.setAttribute('aria-describedby', 'sandbox-help');
-        tile.addEventListener('focus', () => select(index));
-        tile.addEventListener('click', () => { select(index, true); toggle(index); });
-        tile.addEventListener('keydown', (event) => {
-          const row = Math.floor(index / 7);
-          const col = index % 7;
-          let next = index;
-          if (event.key === 'ArrowUp') next = Math.max(0, row - 1) * 7 + col;
-          else if (event.key === 'ArrowDown') next = Math.min(size - 1, row + 1) * 7 + col;
-          else if (event.key === 'ArrowLeft') next = row * 7 + Math.max(0, col - 1);
-          else if (event.key === 'ArrowRight') next = row * 7 + Math.min(size - 1, col + 1);
-          else if (event.key === 'Home') next = 0;
-          else if (event.key === 'End') next = (size - 1) * 7 + size - 1;
-          else if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            if (!event.repeat) toggle(index);
-            return;
-          }
-          else return;
-          event.preventDefault();
-          select(next, true);
-        });
-        drawTile(index);
-      });
-
-      document.getElementById('shuffle').addEventListener('click', () => {
-        world = world.map((_, index) => {
-          const row = Math.floor(index / 7), col = index % 7;
-          if (row >= size || col >= size) return world[index];
-          if (row === 0 || col === 0 || row === size - 1 || col === size - 1) return 0;
-          const value = Math.random();
-          return value < .45 ? 0 : value < .7 ? 1 : value < .93 ? 2 : 3;
-        });
-        tiles.forEach((_, index) => drawTile(index));
-        status.textContent = 'New landscape created.';
-      });
-      document.getElementById('reset').addEventListener('click', () => {
-        world = [...original];
-        tiles.forEach((_, index) => drawTile(index));
-        status.textContent = 'Original landscape restored.';
-      });
-
-      // A smaller scene gives phone users larger targets without zooming.
-      const compact = window.matchMedia('(max-width: 720px)');
-      function layout() {
-        size = compact.matches ? 4 : 7;
-        const hadTileFocus = document.activeElement.classList.contains('tile');
-        tiles.forEach((tile) => {
-          tile.classList.toggle('tile-hidden', Number(tile.dataset.row) >= size || Number(tile.dataset.col) >= size);
-        });
-        if (Math.floor(active / 7) >= size || active % 7 >= size) select(24, hadTileFocus);
-        scene.setAttribute('viewBox', compact.matches ? '166 52 288 238' : '0 0 620 425');
-        document.getElementById('grid-size').textContent = `${size} × ${size}`;
-        document.getElementById('board-shadow').setAttribute('d', compact.matches ? 'm310 100 128 72-128 72-128-72Z' : 'm310 103 227 128-227 132L83 231Z');
-        document.getElementById('scene-frame').setAttribute('d', compact.matches ? 'M184 72h-10v10 M436 72h10v10 M174 256v10h10 M446 256v10h-10' : 'M48 65H30v18 M572 65h18v18 M30 342v18h18 M590 342v18h-18');
-      }
-      layout();
-      compact.addEventListener('change', layout);
-
-      scene.setAttribute('role', 'group');
-      scene.setAttribute('aria-label', 'Interactive isometric tile sketch');
-      scene.classList.add('enhanced');
-      document.getElementById('sketch-hint').textContent = 'Click or tap a tile. Make it your own.';
-      document.getElementById('sketch-controls').hidden = false;
-    })();
+    document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
