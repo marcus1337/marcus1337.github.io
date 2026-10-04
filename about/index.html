@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hello</title>
+  <title>Games &amp; Projects</title>
+  <meta name="description" content="Independent games and small software experiments, with short notes about each project." />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -168,11 +169,42 @@
         transform: translateY(0);
       }
     }
+
+    /* Small additions: project notes, keyboard focus and narrow-screen layout. */
+    .page-title { max-width: 1000px; margin: 0 auto 1.5rem; text-align: center; font-size: 1.8rem; }
+    .half { min-width: 0; }
+    #projects { position: relative; z-index: 1; }
+    a:focus-visible, summary:focus-visible { outline: 2px solid #90caf9; outline-offset: 4px; }
+    .project-entry { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; }
+    .project-info { position: relative; flex-shrink: 0; }
+    .project-info summary { list-style: none; cursor: pointer; color: #b8d9f5; background: #28323b; border: 1px solid #485a6a; border-radius: 6px; padding: .2rem .55rem; font-size: .75rem; line-height: 1.6; }
+    .project-info summary::-webkit-details-marker { display: none; }
+    .project-info summary:hover, .project-info[open] summary { background: #344657; color: #fff; }
+    .project-info[open] { z-index: 2; }
+    .project-note { position: absolute; right: 0; top: calc(100% + .45rem); width: min(20rem, calc(100vw - 2.5rem)); padding: 1rem; background: #252d35; border: 1px solid #566b7e; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.35); color: #e6edf3; font-size: .85rem; line-height: 1.6; }
+    .project-note.above { top: auto; bottom: calc(100% + .45rem); }
+    .project-note strong { color: #fff; }
+    .project-note p { margin: .4rem 0 0; }
+    .past-release { font-size: .7rem; color: #b3bdc7; }
+    .project-hint { font-size: .8rem; color: #b3bdc7; margin-bottom: 0; }
+    @media (max-width: 600px) {
+      header { padding: 2rem 1rem; }
+      .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      .info-grid h2 { font-size: 1.1rem; }
+      .half { padding: 1.25rem; flex: 0 1 auto; width: 100%; }
+      .email-link { overflow-wrap: anywhere; }
+      .games-table th, .games-table td { padding: .65rem .35rem; font-size: .85rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      header, .half { animation: none; opacity: 1; }
+      * { transition: none !important; }
+    }
   </style>
 </head>
 <body>
 
   <header>
+    <h1 class="page-title">Games &amp; Projects</h1>
     <div class="info-grid">
       <div>
         <h2>Who</h2>
@@ -180,7 +212,7 @@
       </div>
       <div>
         <h2>What</h2>
-        <p>I make games — usually minimal, sometimes strange, always thoughtful.</p>
+        <p>Independent games and small software experiments.</p>
       </div>
       <div>
         <h2>When</h2>
@@ -188,7 +220,7 @@
       </div>
       <div>
         <h2>How</h2>
-        <p>Built from scratch.</p>
+        <p>Custom code, free assets, and artwork made or edited in GIMP.</p>
       </div>
     </div>
   </header>
@@ -198,36 +230,77 @@
       <h2>Games</h2>
       <table class="games-table">
         <tr>
-          <th>Year</th>
-          <th>Title</th>
-          <th>Platform</th>
+          <th scope="col">Year</th>
+          <th scope="col">Title</th>
+          <th scope="col">Platform</th>
         </tr>
         <tr>
           <td>2023</td>
-          <td><a href="https://store.steampowered.com/app/2293320/Checkerboard_Collection/" target="_blank">Checkerboard Collection</a></td>
+          <td>
+            <div class="project-entry">
+              <a href="https://store.steampowered.com/app/2293320/Checkerboard_Collection/" target="_blank" rel="noopener noreferrer">Checkerboard Collection</a>
+              <details class="project-info">
+                <summary aria-label="More about Checkerboard Collection">Info</summary>
+                <div class="project-note"><strong>Checkerboard Collection</strong><p>C++ board games with alpha-beta search, parallel root-move evaluation and multiplayer state reconstructed from action histories.</p></div>
+              </details>
+            </div>
+          </td>
           <td>PC</td>
         </tr>
         <tr>
           <td>2021</td>
-          <td><a href="https://store.steampowered.com/app/1680300/Spades/" target="_blank">Spades</a></td>
+          <td>
+            <div class="project-entry">
+              <a href="https://store.steampowered.com/app/1680300/Spades/" target="_blank" rel="noopener noreferrer">Spades</a>
+              <details class="project-info">
+                <summary aria-label="More about Spades">Info</summary>
+                <div class="project-note"><strong>Spades</strong><p>A C++ card game released on Steam. Supporting work includes Steam multiplayer integration and a separate rules library with undo/redo and GoogleTest cases.</p></div>
+              </details>
+            </div>
+          </td>
           <td>PC</td>
         </tr>
         <tr>
           <td>2018</td>
-          <td><a href="https://play.google.com/store/apps/details?id=com.fullrune.areashiftertwo&hl=en" target="_blank">Area Shifter 2</a></td>
+          <td>
+            <div class="project-entry">
+              <span>Area Shifter 2</span> <small class="past-release">Past release</small>
+              <details class="project-info">
+                <summary aria-label="More about Area Shifter 2">Info</summary>
+                <div class="project-note"><strong>Area Shifter 2</strong><p>An Android app released in 2018. Previously published on Google Play; it is no longer listed.</p></div>
+              </details>
+            </div>
+          </td>
           <td>Android</td>
         </tr>
         <tr>
           <td>2018</td>
-          <td><a href="https://play.google.com/store/apps/details?id=test.morris&hl=en" target="_blank">Nine Men's Morris</a></td>
+          <td>
+            <div class="project-entry">
+              <span>Nine Men&#x27;s Morris</span> <small class="past-release">Past release</small>
+              <details class="project-info">
+                <summary aria-label="More about Nine Men&#x27;s Morris">Info</summary>
+                <div class="project-note"><strong>Nine Men&#x27;s Morris</strong><p>An Android app released in 2018. Previously published on Google Play; it is no longer listed.</p></div>
+              </details>
+            </div>
+          </td>
           <td>Android</td>
         </tr>
         <tr>
           <td>2017</td>
-          <td><a href="https://www.microsoft.com/en-us/p/half-robot/9p93l2bhq7jx" target="_blank">Half Robot</a></td>
+          <td>
+            <div class="project-entry">
+              <a href="https://apps.microsoft.com/detail/9p93l2bhq7jx?hl=en-US&amp;gl=US" target="_blank" rel="noopener noreferrer">Half Robot</a>
+              <details class="project-info">
+                <summary aria-label="More about Half Robot">Info</summary>
+                <div class="project-note"><strong>Half Robot</strong><p>A C++/SDL2 platformer inspired by Mega Man, with a finite-state player controller. Released on the Microsoft Store in 2017.</p></div>
+              </details>
+            </div>
+          </td>
           <td>PC</td>
         </tr>
       </table>
+      <p class="project-hint">Hover, focus or tap Info for a short project note. Press Esc to close.</p>
     </div>
   </div>
 
@@ -235,18 +308,66 @@
     <div class="half">
       <h2>Contact</h2>
       <p><strong>Discord:</strong> 
-        <a class="discord-link" href="https://discord.gg/Q26Hh2W2Mj" target="_blank">xxrandom</a>
+        <a class="discord-link" href="https://discord.gg/Q26Hh2W2Mj" target="_blank" rel="noopener noreferrer">xxrandom</a>
       </p>
       <p><strong>Email:</strong> 
         <a class="email-link" href="mailto:clientinfo1337@gmail.com">clientinfo1337@gmail.com</a>
       </p>
       <div class="contact-icons">
-        <a class="icon-button" href="https://github.com/marcus1337" target="_blank" title="GitHub">
+        <a class="icon-button" href="https://github.com/marcus1337" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
           <span class="material-icons">code</span>
         </a>
       </div>
     </div>
   </div>
+
+
+<script>
+  // Native details work on their own. These additions support quiet hover previews.
+  const notes = [];
+  document.querySelectorAll('.project-entry').forEach((entry) => {
+    const details = entry.querySelector('details');
+    const summary = details.querySelector('summary');
+    const panel = details.querySelector('.project-note');
+    let pinned = false;
+    let timer;
+    const close = () => { clearTimeout(timer); pinned = false; details.open = false; };
+    const position = () => {
+      panel.classList.remove('above');
+      panel.style.transform = '';
+      const bounds = panel.getBoundingClientRect();
+      const width = document.documentElement.clientWidth;
+      const shift = bounds.left < 12 ? 12 - bounds.left : Math.min(0, width - 12 - bounds.right);
+      if (shift) panel.style.transform = `translateX(${shift}px)`;
+      if (bounds.bottom > innerHeight - 12 && summary.getBoundingClientRect().top > bounds.height + 20) panel.classList.add('above');
+    };
+    const show = () => {
+      notes.forEach((note) => { if (note.entry !== entry) note.close(); });
+      details.open = true;
+      position();
+    };
+    notes.push({ entry, close, details, position });
+    entry.addEventListener('pointerenter', () => {
+      clearTimeout(timer);
+      if (matchMedia('(hover: hover)').matches) timer = setTimeout(show, 180);
+    });
+    entry.addEventListener('pointerleave', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { if (!pinned && !entry.matches(':focus-within')) close(); }, 140);
+    });
+    entry.addEventListener('focusin', show);
+    entry.addEventListener('focusout', (event) => { if (!entry.contains(event.relatedTarget)) close(); });
+    summary.addEventListener('click', (event) => {
+      event.preventDefault();
+      clearTimeout(timer);
+      pinned = !pinned;
+      if (pinned) show(); else close();
+    });
+  });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') notes.forEach((note) => note.close()); });
+  document.addEventListener('pointerdown', (event) => { notes.forEach((note) => { if (!note.entry.contains(event.target)) note.close(); }); });
+  window.addEventListener('resize', () => { notes.forEach((note) => { if (note.details.open) note.position(); }); });
+</script>
 
 </body>
 </html>
