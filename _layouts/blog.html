@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>{{ page.title | escape }} — {{ site.title | escape }}</title>
+  <meta name="description" content="{{ page.description | default: site.description | escape }}" />
+  <link rel="stylesheet" href="{{ '/assets/blog.css' | relative_url }}" />
+</head>
+<body>
+  <main>
+    <nav class="page-nav" aria-label="Site navigation">
+      <a class="site-name" href="{{ '/' | relative_url }}">marcus1337</a>
+      <a href="{{ '/blog/' | relative_url }}"{% if page.url == '/blog/' %} aria-current="page"{% endif %}>Blog</a>
+    </nav>
+    {{ content }}
+    <footer>© {{ site.time | date: '%Y' }}</footer>
+  </main>
+</body>
+</html>
