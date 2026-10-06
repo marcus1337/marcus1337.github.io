@@ -2,3 +2,4 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 __pycache__/
+_data/post_history.json

@@ -72,8 +72,26 @@ mark { color: #21200e; background: #f5e6a1; padding: .1em .2em; border-radius: 2
 .mermaid-graph svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .mermaid-figure details { margin-top: 8px; }
 .footnotes { color: var(--muted); font-size: .9em; border-top: 1px solid var(--line); margin-top: 32px; padding-top: 16px; }
-.back-link { margin-top: 42px; }
-.back-link a { display: inline-flex; align-items: center; min-height: 44px; }
+.post-history { margin-top: 42px; border: 1px solid var(--line); border-radius: 6px; padding: 0 16px; overflow-wrap: anywhere; }
+.post-history summary { cursor: pointer; min-height: 44px; padding: 9px 0; color: var(--muted); }
+.post-history summary:hover { color: var(--accent); }
+.post-history summary:focus-visible, .post-history pre:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.post-history a { color: var(--accent); }
+.history-count, .history-summary-meta { color: var(--muted); font-size: 13px; }
+.history-list { list-style: none; padding: 0; margin: 8px 0 16px; }
+.history-list > li { border-top: 1px solid var(--line); }
+.history-commit { min-width: 0; }
+.history-subject { color: var(--fg); }
+.history-summary-meta { display: block; margin: 3px 0 0 18px; }
+.history-meta { margin: 12px 0 18px; font-size: 13px; }
+.history-meta dt { color: var(--muted); margin-top: 8px; }
+.history-meta dd { margin: 0; }
+.post-history h3 { margin: 20px 0 8px; font-size: 15px; }
+.post-history pre { max-width: 100%; margin: 8px 0 18px; padding: 12px; font-size: 12px; }
+.history-message { white-space: pre-wrap; overflow-wrap: anywhere; }
+.history-diff { white-space: pre; }
+.history-comparison { font-size: 13px; color: var(--muted); }
+.history-additions, .history-deletions { font-variant-numeric: tabular-nums; }
 footer { border-top: 1px solid var(--line); margin-top: 44px; padding-top: 18px; font-size: 13px; }
 @media (max-width: 480px) {
   main { margin-top: 24px; }

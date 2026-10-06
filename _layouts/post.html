@@ -10,7 +10,7 @@ layout: blog
     {{ content }}
   </div>
 </article>
-<p class="back-link"><a href="{{ '/blog/' | relative_url }}">← All posts</a></p>
+{% include post-history.html %}
 {% if page.mermaid %}
 <script type="module" src="{{ '/assets/mermaid.js' | relative_url }}"></script>
 {% endif %}

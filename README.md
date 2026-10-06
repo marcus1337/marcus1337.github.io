@@ -23,7 +23,7 @@ git commit -m "Add blog post"
 git push
 ```
 
-GitHub Pages builds the blog automatically. Posts appear at
+The Pages workflow builds the blog automatically after a push to `main`. Posts appear at
 `https://marcus1337.github.io/blog/`, newest first.
 Each post URL includes its date, so posts with the same title on different
 days have separate pages.
@@ -57,16 +57,65 @@ If the library cannot load or a diagram has invalid syntax, its source
 remains readable. Use `accTitle:` and `accDescr:` in a diagram to describe
 it for screen readers; the demo includes examples.
 
+### Post history
+
+Each published post has an expandable **Post history** list in place of
+the bottom **← All posts** link. The header's **Blog** link remains
+available for navigation. Entries show
+the commit SHA, committer date, full message, additions/deletions, file
+path and the diff for that post only. The GitHub link opens the full
+commit, which may contain other files.
+
+The build runs `scripts/post-history.py` before Jekyll. It reads committed
+Git history and generates `_data/post_history.json`, indexed by the
+current post's source path. The post layout renders this data as native
+HTML `<details>` elements; no browser requests or JavaScript are needed.
+Generated history is ignored by Git and refreshed on every build.
+Future posts need no extra front matter or manual commit list.
+
+The checkout uses `fetch-depth: 0` so earlier commits are available.
+History follows renames using Git's similarity heuristics, just like
+`git log --follow`; a rename combined with a large rewrite may not be
+recognized. For a merge commit, displayed changes are compared with its
+first parent and labelled with that parent. The initial version is
+compared with an empty file. Binary changes have no line counts.
+Only committed changes are listed; edits in the working tree are not
+included in history.
+
+To regenerate history for a local Jekyll build, run from the repository
+root:
+
+```sh
+python3 scripts/post-history.py --repository marcus1337/marcus1337.github.io
+```
+
+The generator requires Git, Python 3 and a full clone. It uses only the
+Python standard library. Its regression tests run with:
+
+```sh
+python3 -m unittest discover -s tests
+```
+
 ## First-time setup
 
 The Blog button, list, article layout, and configuration are ready.
 Review the changes, commit them, and push to enable them on the live site:
 
 ```sh
-git add index.html blog/ _layouts/ _posts/ _drafts/ assets/ scripts/ _config.yml .gitignore README.md
-git commit -m "Add minimal Markdown blog"
+git add index.html blog/ _layouts/ _includes/ _posts/ _drafts/ assets/ scripts/ tests/ .github/ _config.yml .gitignore README.md
+git commit -m "Add post history to the blog"
 git push
 ```
 
-The current Pages publishing source is `main` / repository root.
+In the repository's **Settings → Pages → Build and deployment**, change
+**Source** from **Deploy from a branch** (`main` / repository root) to
+**GitHub Actions**. This one-time change allows the history generator to
+run before Jekyll; the former branch build does not run custom scripts.
+
+`.github/workflows/pages.yml` tests and generates the history, builds with
+GitHub's Pages-compatible Jekyll action, uploads `_site`, and deploys the
+artifact. It runs on pushes to `main` or manually from the Actions tab.
+Only `main` can deploy, and an active deployment is allowed to finish.
+The deployment job has the Pages and identity-token write permissions
+required by GitHub; the build job only reads repository contents.
 You do not need to install Jekyll locally for writing or publishing.
