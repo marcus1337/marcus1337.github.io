@@ -13,7 +13,6 @@ const { post, history } = Astro.props;
   publishedTime={post.data.pubDate.toISOString()} modifiedTime={post.data.updatedDate?.toISOString()}>
   <article class="blog-article">
     <header class="post-header">
-      <a class="section-label" href="/blog/">Writing</a>
       <h1>{post.data.title}</h1>
       {post.data.description && <p class="post-description">{post.data.description}</p>}
       <PostMetadata pubDate={post.data.pubDate} updatedDate={post.data.updatedDate} tags={post.data.tags} />

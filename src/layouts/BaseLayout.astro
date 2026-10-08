@@ -1,10 +1,11 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import SiteNav from '../components/SiteNav.astro';
+import BlogHeader from '../components/BlogHeader.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 interface Props {
+  index?: boolean;
   title: string;
   description?: string;
   image?: string;
@@ -13,19 +14,27 @@ interface Props {
   modifiedTime?: string;
 }
 
-const metadata = Astro.props;
+const { index = false, ...metadata } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <BaseHead {...metadata} />
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem('blog-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch {}
+    </script>
     <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <SiteNav />
-    <main id="main-content" class="site-main" tabindex="-1">
+    <BlogHeader />
+    <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1">
       <slot />
     </main>
     <Footer />

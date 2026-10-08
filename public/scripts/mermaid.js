@@ -9,7 +9,7 @@ if (blocks.length) {
     const { default: mermaid } = await import(
       'https://cdn.jsdelivr.net/npm/mermaid@12.1.0/dist/mermaid.esm.min.mjs'
     );
-    const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const isDark = () => document.documentElement.dataset.theme !== 'light';
     const diagrams = blocks.map((code, index) => ({
       source: code.textContent,
       block: code.closest('pre'),
@@ -22,7 +22,7 @@ if (blocks.length) {
       mermaid.initialize({
         startOnLoad: false,
         securityLevel: 'strict',
-        theme: colorScheme.matches ? 'dark' : 'default',
+        theme: isDark() ? 'dark' : 'default',
         fontFamily: 'system-ui, sans-serif',
       });
       for (const diagram of diagrams) {
@@ -58,8 +58,10 @@ if (blocks.length) {
       });
       return pending;
     };
+    new MutationObserver(update).observe(document.documentElement, {
+      attributes: true, attributeFilter: ['data-theme'],
+    });
     await update();
-    colorScheme.addEventListener('change', update);
   } catch (error) {
     console.warn('Mermaid could not load; showing diagram source instead.', error);
   }

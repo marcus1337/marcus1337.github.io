@@ -1,0 +1,25 @@
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Light mode" hidden>Light mode</button>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+
+  function updateLabels() {
+    const label = document.documentElement.dataset.theme === 'light' ? 'Dark mode' : 'Light mode';
+    for (const button of buttons) {
+      button.textContent = label;
+      button.setAttribute('aria-label', label);
+      button.hidden = false;
+    }
+  }
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem('blog-theme', theme); } catch {}
+      updateLabels();
+    });
+  }
+
+  updateLabels();
+</script>

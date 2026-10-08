@@ -17,7 +17,9 @@ npm run dev
 ```
 
 Open the local URL printed by Astro, normally `http://localhost:4321`.
-The blog follows the system's light/dark preference.
+The blog opens in a dark notebook theme. Use the footer's Light mode / Dark mode
+button to switch; the choice is saved locally. Blog pages use one contextual
+back link: Main site on the list, All posts on an article.
 
 ```sh
 npm run check       # Astro, TypeScript and content-schema checks
@@ -144,7 +146,7 @@ flowchart TB
 
 Only enabled posts include `public/scripts/mermaid.js`. It loads Mermaid
 12.1.0 from a pinned jsDelivr URL after finding diagram blocks. Rendering uses
-strict security and follows the system colour scheme. Each rendered diagram
+strict security and follows the selected blog colour scheme. Each rendered diagram
 keeps its original code in an expandable **Diagram source** section. If
 JavaScript is disabled, the library cannot load, or a diagram is invalid,
 readable source remains available. Use `accTitle` and `accDescr` to describe

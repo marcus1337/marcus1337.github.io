@@ -1,0 +1,107 @@
+---
+const coordinates = [64, 112, 160, 208, 256];
+const rows = [48, 96, 144, 192, 240];
+const pieces = [
+  { x: 64, y: 96 },
+  { x: 160, y: 96 },
+  { x: 160, y: 192 },
+  { x: 256, y: 144 },
+];
+---
+
+<div class="notebook-sketch">
+  <svg viewBox="0 0 360 300" aria-hidden="true" focusable="false">
+    <g class="grid" fill="none" stroke-width="1">
+      {coordinates.map((x) => <path d={`M${x} 48V240`} />)}
+      {rows.map((y) => <path d={`M64 ${y}H256`} />)}
+    </g>
+
+    <g class="intersections">
+      {coordinates.flatMap((x) => rows.map((y) => <circle cx={x} cy={y} r="2" />))}
+    </g>
+
+    <g class="frame" fill="none" stroke-width="1">
+      <path d="M46 64V30H80 M240 30H274V64 M46 224V258H80 M240 258H274V224" />
+      <path d="M46 144H40 M274 144H280 M160 30V24 M160 258V264" />
+    </g>
+
+    <path class="route" d="M64 96H160V192H208V144H256" fill="none" stroke-width="1.5" />
+
+    <g class="pieces" stroke-width="1.5">
+      {pieces.map(({ x, y }) => <circle cx={x} cy={y} r="5" />)}
+    </g>
+
+    <circle class="focus-ring" cx="208" cy="192" r="18" fill="none" stroke-width="1" />
+    <circle class="focus-piece" cx="208" cy="192" r="9" />
+    <path class="focus-mark" d="M205 192H211 M208 189V195" fill="none" stroke-width="1" />
+
+    <g class="annotation" fill="none" stroke-width="1">
+      <path d="M228 192H287M283 188L287 192L283 196" />
+      <path d="M298 143V162 M294 143H302 M294 162H302" />
+    </g>
+
+    <g class="labels">
+      {coordinates.map((x, index) => <text x={x} y="282" text-anchor="middle">{String(index).padStart(2, '0')}</text>)}
+      {rows.map((y, index) => <text x="25" y={y + 3} text-anchor="end">{String(index).padStart(2, '0')}</text>)}
+      <text x="290" y="213">t + 1</text>
+      <text x="309" y="155">Δ</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .notebook-sketch {
+    width: 100%;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .grid,
+  .frame {
+    stroke: var(--line);
+  }
+
+  .intersections {
+    fill: var(--muted);
+    opacity: .32;
+  }
+
+  .route,
+  .annotation {
+    stroke: var(--muted);
+    opacity: .6;
+  }
+
+  .pieces {
+    fill: var(--bg);
+    stroke: var(--muted);
+  }
+
+  .focus-piece {
+    fill: var(--accent);
+  }
+
+  .focus-ring {
+    stroke: var(--accent);
+    opacity: .55;
+  }
+
+  .focus-mark {
+    stroke: var(--bg);
+  }
+
+  .labels {
+    fill: var(--muted);
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    letter-spacing: .04em;
+    opacity: .7;
+  }
+</style>

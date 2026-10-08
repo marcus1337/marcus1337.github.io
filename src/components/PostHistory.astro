@@ -54,13 +54,13 @@ const describeChange = (status: string, firstVersion: boolean) => {
 )}
 
 <style>
-  .post-history { margin-top: 3rem; padding: 0 1rem; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: 0.6rem; overflow-wrap: anywhere; }
+  .post-history { margin-top: 3rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); overflow-wrap: anywhere; }
   summary { cursor: pointer; min-height: 44px; padding: 0.75rem 0; }
   summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 2px; }
-  .history-count, .history-date, .history-description { font-size: 0.85rem; opacity: 0.75; }
+  .history-count, .history-date, .history-description { font-size: 0.8rem; color: var(--muted); }
   .history-list { list-style: none; padding: 0; margin: 0 0 0.75rem; }
-  .history-list > li { border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
-  .history-date { display: inline-block; margin-right: 0.7rem; }
+  .history-list > li { border-top: 1px solid var(--line); }
+  .history-date { font-family: var(--font-mono); display: inline-block; margin-right: 0.7rem; }
   .history-content { min-width: 0; padding-bottom: 0.5rem; }
   .history-note { white-space: pre-wrap; overflow-wrap: anywhere; }
   .history-description { margin: 0.5rem 0; }

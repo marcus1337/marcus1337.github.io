@@ -4,11 +4,12 @@ interface Props { posts: BlogPost[] }
 const { posts } = Astro.props;
 ---
 <ol class="post-list">
-  {posts.map((post) => (
+  {posts.map((post, index) => (
     <li>
-      <time datetime={publicationDay(post)}>{formatDate(post.data.pubDate)}</time>
-      <div>
-        <h2><a href={postUrl(post)}>{post.data.title}</a></h2>
+      <span class="entry-number" aria-hidden="true">{String(posts.length - index).padStart(2, '0')}</span>
+      <div class="entry-content">
+        <time datetime={publicationDay(post)}>{formatDate(post.data.pubDate)}</time>
+        <h3><a href={postUrl(post)}>{post.data.title}<span class="entry-arrow" aria-hidden="true">↗</span></a></h3>
         {post.data.description && <p>{post.data.description}</p>}
       </div>
     </li>
