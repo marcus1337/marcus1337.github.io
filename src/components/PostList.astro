@@ -1,0 +1,16 @@
+---
+import { formatDate, postUrl, publicationDay, type BlogPost } from '../lib/blog';
+interface Props { posts: BlogPost[] }
+const { posts } = Astro.props;
+---
+<ol class="post-list">
+  {posts.map((post) => (
+    <li>
+      <time datetime={publicationDay(post)}>{formatDate(post.data.pubDate)}</time>
+      <div>
+        <h2><a href={postUrl(post)}>{post.data.title}</a></h2>
+        {post.data.description && <p>{post.data.description}</p>}
+      </div>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PostMetadata from '../components/PostMetadata.astro';
+import PostHistory from '../components/PostHistory.astro';
+import type { BlogPost } from '../lib/blog';
+import type { PostCommit } from '../lib/post-history.mjs';
+import '../styles/blog.css';
+
+interface Props { post: BlogPost; history: PostCommit[] }
+const { post, history } = Astro.props;
+---
+<BaseLayout title={post.data.title} description={post.data.description} type="article"
+  publishedTime={post.data.pubDate.toISOString()} modifiedTime={post.data.updatedDate?.toISOString()}>
+  <article class="blog-article">
+    <header class="post-header">
+      <a class="section-label" href="/blog/">Writing</a>
+      <h1>{post.data.title}</h1>
+      {post.data.description && <p class="post-description">{post.data.description}</p>}
+      <PostMetadata pubDate={post.data.pubDate} updatedDate={post.data.updatedDate} tags={post.data.tags} />
+    </header>
+    <div class="post-body"><slot /></div>
+  </article>
+  <PostHistory history={history} />
+  {post.data.mermaid && <script is:inline type="module" src="/scripts/mermaid.js"></script>}
+</BaseLayout>

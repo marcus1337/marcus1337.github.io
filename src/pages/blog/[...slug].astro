@@ -1,0 +1,18 @@
+---
+import { render } from 'astro:content';
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+import { getPublishedPosts, postSlug, type BlogPost } from '../../lib/blog';
+import { getPostHistory } from '../../lib/post-history.mjs';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: postSlug(post) }, props: { post } }));
+}
+
+interface Props { post: BlogPost }
+const { post } = Astro.props;
+const { Content } = await render(post);
+if (!post.filePath) throw new Error(`Missing source path for blog entry: ${post.id}`);
+const history = getPostHistory(process.cwd(), post.filePath);
+---
+<BlogPostLayout post={post} history={history}><Content /></BlogPostLayout>

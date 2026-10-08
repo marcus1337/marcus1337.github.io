@@ -1,0 +1,71 @@
+---
+interface Props {
+  patch: string;
+}
+
+const { patch } = Astro.props;
+
+type Passage = { kind: 'added' | 'removed' | 'context'; lines: string[] };
+const passages: Passage[][] = [];
+let current: Passage[] | undefined;
+for (const line of patch.split('\n')) {
+  if (line.startsWith('@@')) {
+    current = [];
+    passages.push(current);
+    continue;
+  }
+  // Git headers precede the first passage. The no-final-newline marker is
+  // storage information rather than part of the article's text.
+  if (!current || !/^[+\- ]/.test(line)) continue;
+  const kind: Passage['kind'] = line[0] === '+' ? 'added' : line[0] === '-' ? 'removed' : 'context';
+  if (current.at(-1)?.kind !== kind) current.push({ kind, lines: [] });
+  current.at(-1)?.lines.push(line.slice(1));
+}
+const labels = { added: 'Added', removed: 'Removed', context: 'Surrounding text' };
+const visiblePassages = passages.map((passage) => passage.filter((part) =>
+  part.kind !== 'context' || part.lines.some((line) => line.trim())
+)).filter((passage) => passage.length > 0);
+---
+
+{visiblePassages.length > 0 && <details class="source-changes">
+  <summary>View source changes</summary>
+  <p class="source-description">These passages show the text and formatting saved with this edit.</p>
+  {visiblePassages.map((passage, index) => <section class="changed-passage" aria-label={`Changed passage ${index + 1}`}>
+    {visiblePassages.length > 1 && <h4>Passage {index + 1}</h4>}
+    {passage.map((part) => <div class:list={['text-change', part.kind]}>
+      <span class="change-label">{labels[part.kind]}</span>
+      <pre class="changed-text" tabindex="0" aria-label={`${labels[part.kind]} text`}><code>{part.lines.join('\n')}</code></pre>
+    </div>)}
+  </section>)}
+</details>}
+
+<style>
+  .source-changes { margin: 1rem 0; }
+  summary { min-height: 44px; padding: 0.6rem 0; cursor: pointer; }
+  summary:focus-visible, .changed-text:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .source-description { font-size: 0.85rem; opacity: 0.75; margin: 0.5rem 0 1rem; }
+  .changed-passage { margin: 1rem 0 1.5rem; }
+  h4 { font-size: 0.85rem; margin: 1rem 0 0.6rem; }
+  .change-label { display: block; font-size: 0.8rem; font-weight: 650; margin-bottom: 0.3rem; }
+  .text-change { margin: 0.75rem 0; }
+  .context { opacity: 0.7; }
+  .added, .removed { border-left: 3px solid currentColor; padding-left: 0.75rem; }
+  .added { border-color: var(--accent); }
+  .removed { border-color: #ad543e; }
+  @media (prefers-color-scheme: dark) { .removed { border-color: #edb3a7; } }
+  .changed-text {
+    max-width: 100%;
+    margin: 0.75rem 0 1.25rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, currentColor 4%, transparent);
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    tab-size: 2;
+  }
+  .changed-text code { padding: 0; background: none; color: inherit; }
+</style>

@@ -1,0 +1,74 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fafaf7;
+  --fg: #202d37;
+  --muted: #5f6d76;
+  --line: #d9dfdf;
+  --panel: #ffffff;
+  --accent: #226d71;
+  --accent-soft: #edf4f2;
+  --content-width: 760px;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111a21;
+    --fg: #e7eeef;
+    --muted: #a8b7bc;
+    --line: #2d3c44;
+    --panel: #18252e;
+    --accent: #9dd6cc;
+    --accent-soft: #203c3d;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 24px; }
+body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; background: var(--bg); color: var(--fg); line-height: 1.7; }
+body, input, button { font-family: inherit; }
+a { color: var(--accent); text-underline-offset: .2em; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+img, video, svg { max-width: 100%; }
+img, video { height: auto; }
+h1, h2, h3 { line-height: 1.2; letter-spacing: -.035em; text-wrap: balance; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.75rem); margin: 0 0 1rem; }
+h2 { font-size: clamp(1.6rem, 3vw, 2rem); margin: 0 0 1rem; }
+h3 { font-size: 1.3rem; margin: 0 0 1rem; }
+p { margin: 0 0 1.25rem; }
+::selection { background: var(--accent); color: var(--bg); }
+.container { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+.site-main { width: min(var(--content-width), calc(100% - 48px)); margin: 64px auto 96px; flex: 1; min-width: 0; }
+.site-main:focus { outline: none; }
+.site-header { border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 88px; padding-block: 14px; }
+.site-name { display: inline-flex; align-items: center; gap: 12px; color: var(--fg); font-size: 1rem; font-weight: 650; text-decoration: none; flex-shrink: 0; }
+.site-symbol { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: var(--accent-soft); color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.35rem; }
+.site-header nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.site-header nav a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; color: var(--muted); font-size: .9rem; text-decoration: none; }
+.site-header nav a:hover, .site-header nav a[aria-current="page"] { color: var(--fg); }
+.site-header nav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 8px; }
+.site-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 26px; }
+.footer-inner p { margin: 0; }
+.footer-inner a { color: inherit; }
+.skip-link { position: absolute; left: 24px; top: -100px; z-index: 10; background: var(--panel); border: 1px solid var(--line); padding: 10px 16px; border-radius: 6px; }
+.skip-link:focus { top: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.eyebrow { margin: 0 0 12px; color: var(--accent); font-size: .75rem; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; }
+
+@media (max-width: 640px) {
+  .container, .site-main { width: calc(100% - 36px); }
+  .site-main { margin-block: 38px 64px; }
+  .nav-inner { flex-direction: column; align-items: start; gap: 10px; padding-block: 16px 10px; }
+  .site-header nav { gap: 4px 24px; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}

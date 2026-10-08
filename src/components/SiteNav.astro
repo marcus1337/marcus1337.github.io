@@ -1,0 +1,26 @@
+---
+import { SITE_TITLE, REPOSITORY } from '../consts';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/about/', label: 'About' },
+];
+const pathname = Astro.url.pathname;
+const isCurrent = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a class="site-name" href="/" aria-label={`${SITE_TITLE} homepage`}>
+      <span class="site-symbol" aria-hidden="true">m</span>
+      <span>{SITE_TITLE}</span>
+    </a>
+    <nav aria-label="Main navigation">
+      {links.map(({ href, label }) => (
+        <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+      ))}
+      <a href={`https://github.com/${REPOSITORY.split('/')[0]}`}>GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>

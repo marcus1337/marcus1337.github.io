@@ -1,0 +1,33 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import SiteNav from '../components/SiteNav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+}
+
+const metadata = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {...metadata} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <SiteNav />
+    <main id="main-content" class="site-main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

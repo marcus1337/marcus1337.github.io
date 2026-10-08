@@ -1,0 +1,8 @@
+{
+  "ref": "f8fee6ab1ba7f7d8e29a2d34710c053c36f03f36",
+  "paths": {
+    "src/content/blog/my-first-post-thanks-chatgpt.md": "_posts/2026-10-04-my-first-post-thanks-chatgpt.md",
+    "src/content/blog/my-second-post.md": "_posts/2026-10-05-my-second-post.md",
+    "src/content/blog/how-to-blog-post.md": "_posts/2026-10-06-how-to-blog-post.md"
+  }
+}

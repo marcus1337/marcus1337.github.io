@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts } from '../../lib/blog';
+import '../../styles/blog.css';
+const posts = await getPublishedPosts();
+---
+<BaseLayout title="Blog" description="Notes on games, code, and things I am exploring.">
+  <header class="page-heading">
+    <p class="eyebrow">Notes &amp; experiments</p>
+    <h1>Blog</h1>
+    <p class="lede">Notes on games, code, and things I’m exploring.</p>
+    <a class="text-link" href="/rss.xml">Subscribe via RSS <span aria-hidden="true">↗</span></a>
+  </header>
+  {posts.length ? <PostList posts={posts} /> : <p>No posts yet.</p>}
+</BaseLayout>

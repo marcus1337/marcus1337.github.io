@@ -1,4 +1,4 @@
-name: Build and deploy Jekyll
+name: Build and deploy Astro
 
 on:
   push:
@@ -17,30 +17,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout full history
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Test post history generator
-        run: python3 -m unittest discover -s tests
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
 
-      - name: Generate post history
-        run: python3 scripts/post-history.py --repository "$GITHUB_REPOSITORY"
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Astro and content
+        run: npm run check
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check post history
+        run: npm run history
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+      - name: Build Astro
+        run: npm run build
+
+      - name: Check generated site
+        run: npm run test:build
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./_site
+          path: ./dist
 
   deploy:
     if: github.ref == 'refs/heads/main'

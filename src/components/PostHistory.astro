@@ -1,0 +1,70 @@
+---
+import GitDiff from './GitDiff.astro';
+import type { PostCommit } from '../lib/post-history.mjs';
+
+interface Props {
+  history: PostCommit[];
+}
+
+const { history } = Astro.props;
+const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
+  dateStyle: 'medium', timeZone: 'Europe/Stockholm',
+}).format(new Date(value));
+const describeChange = (status: string, firstVersion: boolean) => {
+  if (status.startsWith('A')) return firstVersion ? 'The first version of this post.' : 'A new version of the post was added.';
+  if (/^[RC]/.test(status)) return 'The post was saved in a new location.';
+  if (status.startsWith('D')) return 'This version of the post was removed.';
+  return '';
+};
+---
+
+{history.length > 0 && (
+  <details class="post-history">
+    <summary>Edit history <span class="history-count">({history.length} {history.length === 1 ? 'edit' : 'edits'})</span></summary>
+    <ol class="history-list">
+      {history.map((commit, index) => (
+        <li>
+          <details class="history-commit">
+            <summary>
+              <time class="history-date" datetime={commit.date}>{formatDate(commit.date)}</time>
+              <span class="history-subject">{commit.subject}</span>
+            </summary>
+            <div class="history-content">
+              {commit.message.trim() !== commit.subject.trim() && <p class="history-note">{commit.message.trim()}</p>}
+              {commit.is_merge && <p class="history-description">Edits from separate versions were brought together.</p>}
+              {commit.changes.map((change) => (
+                <section class="history-change" aria-label="Changes to the post">
+                  <h3>Changes to the post</h3>
+                  {describeChange(change.status, index === history.length - 1) && <p class="history-description">{describeChange(change.status, index === history.length - 1)}</p>}
+                  <p class="history-lines">{change.additions === null || change.deletions === null
+                    ? 'The contents of this edit cannot be shown as text.'
+                    : change.additions === 0 && change.deletions === 0
+                      ? 'The wording stayed the same.'
+                      : <><span>{change.additions} {change.additions === 1 ? 'line' : 'lines'} added</span> · <span>{change.deletions} {change.deletions === 1 ? 'line' : 'lines'} removed</span></>}</p>
+                  {change.patch && <GitDiff patch={change.patch} />}
+                </section>
+              ))}
+              <p class="history-link"><a href={commit.url}>View this edit on GitHub</a></p>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
+  </details>
+)}
+
+<style>
+  .post-history { margin-top: 3rem; padding: 0 1rem; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: 0.6rem; overflow-wrap: anywhere; }
+  summary { cursor: pointer; min-height: 44px; padding: 0.75rem 0; }
+  summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 2px; }
+  .history-count, .history-date, .history-description { font-size: 0.85rem; opacity: 0.75; }
+  .history-list { list-style: none; padding: 0; margin: 0 0 0.75rem; }
+  .history-list > li { border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+  .history-date { display: inline-block; margin-right: 0.7rem; }
+  .history-content { min-width: 0; padding-bottom: 0.5rem; }
+  .history-note { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .history-description { margin: 0.5rem 0; }
+  .history-lines { margin: 0.5rem 0 1rem; font-size: 0.9rem; }
+  .history-link { margin: 1.25rem 0 0.5rem; font-size: 0.9rem; }
+  h3 { margin: 1.4rem 0 0.5rem; font-size: 1rem; }
+</style>
