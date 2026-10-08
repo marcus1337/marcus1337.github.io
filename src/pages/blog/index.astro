@@ -1,25 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
-import NotebookSketch from '../../components/NotebookSketch.astro';
+import EditorialMotion from '../../components/EditorialMotion.astro';
+import { BLOG_DESCRIPTION } from '../../consts';
 import { getPublishedPosts } from '../../lib/blog';
 import '../../styles/blog.css';
 const posts = await getPublishedPosts();
 ---
-<BaseLayout title="Blog" description="Notes on games, code, and things I am exploring." index>
-  <header class="notebook-intro">
-    <div class="intro-copy">
-      <p class="eyebrow"><span class="notebook-dot" aria-hidden="true"></span> Field notes</p>
-      <h1>Blog<span class="title-dot">.</span></h1>
-      <p class="lede">Notes on games, code, and things I’m exploring.</p>
-    </div>
-    <NotebookSketch />
+<BaseLayout title="Blog" description={BLOG_DESCRIPTION} index>
+  <header class="journal-intro">
+    <h1 class="journal-title">Writing<span class="title-dot">.</span></h1>
+    <p class="lede">{BLOG_DESCRIPTION}</p>
   </header>
   <section class="entries-section" aria-labelledby="entries-heading">
     <div class="entries-heading">
-      <h2 id="entries-heading">Entries</h2>
+      <h2 id="entries-heading">Posts</h2>
       <span>{String(posts.length).padStart(2, '0')} {posts.length === 1 ? 'post' : 'posts'}</span>
     </div>
     {posts.length ? <PostList posts={posts} /> : <p>No posts yet.</p>}
   </section>
+  <EditorialMotion />
 </BaseLayout>

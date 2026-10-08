@@ -1,0 +1,81 @@
+<script>
+  type MotionWindow = Window & { __editorialMotionController?: AbortController };
+  const motionWindow = window as MotionWindow;
+
+  // Keep one lifecycle across Astro navigation and replace any previous bindings.
+  motionWindow.__editorialMotionController?.abort();
+  const lifecycle = new AbortController();
+  motionWindow.__editorialMotionController = lifecycle;
+  const pointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let page: AbortController | undefined;
+
+  function clearPage() {
+    page?.abort();
+    page = undefined;
+  }
+
+  function initialize() {
+    clearPage();
+    if (!pointer.matches || reducedMotion.matches) return;
+
+    const elements = document.querySelectorAll<HTMLElement>(
+      '.index-page .journal-intro, .index-page .post-entry',
+    );
+    if (!elements.length) return;
+
+    page = new AbortController();
+    const { signal } = page;
+    const pending = new Map<HTMLElement, { x: number; y: number }>();
+    let frame = 0;
+
+    function clearElement(element: HTMLElement) {
+      pending.delete(element);
+      element.classList.remove('pointer-active');
+      element.style.removeProperty('--pointer-x');
+      element.style.removeProperty('--pointer-y');
+    }
+
+    function paint() {
+      frame = 0;
+      for (const [element, point] of pending) {
+        const bounds = element.getBoundingClientRect();
+        element.style.setProperty('--pointer-x', `${point.x - bounds.left}px`);
+        element.style.setProperty('--pointer-y', `${point.y - bounds.top}px`);
+      }
+      pending.clear();
+    }
+
+    for (const element of elements) {
+      element.addEventListener('pointerenter', () => {
+        element.classList.add('pointer-active');
+      }, { signal });
+
+      element.addEventListener('pointermove', (event) => {
+        pending.set(element, { x: event.clientX, y: event.clientY });
+        if (!frame) frame = requestAnimationFrame(paint);
+      }, { signal, passive: true });
+
+      element.addEventListener('pointerleave', () => {
+        clearElement(element);
+        if (!pending.size && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      }, { signal });
+    }
+
+    signal.addEventListener('abort', () => {
+      cancelAnimationFrame(frame);
+      for (const element of elements) clearElement(element);
+      pending.clear();
+    }, { once: true });
+  }
+
+  lifecycle.signal.addEventListener('abort', clearPage, { once: true });
+  document.addEventListener('astro:before-swap', clearPage, { signal: lifecycle.signal });
+  document.addEventListener('astro:page-load', initialize, { signal: lifecycle.signal });
+  pointer.addEventListener('change', initialize, { signal: lifecycle.signal });
+  reducedMotion.addEventListener('change', initialize, { signal: lifecycle.signal });
+  initialize();
+</script>

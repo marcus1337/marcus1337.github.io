@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import BlogHeader from '../components/BlogHeader.astro';
 import Footer from '../components/Footer.astro';
+import { ClientRouter, fade } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -21,6 +22,7 @@ const { index = false, ...metadata } = Astro.props;
 <html lang="en" data-theme="dark">
   <head>
     <BaseHead {...metadata} />
+    <ClientRouter fallback="swap" />
     <script is:inline>
       try {
         const savedTheme = localStorage.getItem('blog-theme');
@@ -34,7 +36,8 @@ const { index = false, ...metadata } = Astro.props;
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <BlogHeader />
-    <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1">
+    <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1"
+      transition:name="blog-content" transition:animate={fade({ duration: '180ms' })}>
       <slot />
     </main>
     <Footer />

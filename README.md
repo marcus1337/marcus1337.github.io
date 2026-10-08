@@ -17,9 +17,11 @@ npm run dev
 ```
 
 Open the local URL printed by Astro, normally `http://localhost:4321`.
-The blog opens in a dark notebook theme. Use the footer's Light mode / Dark mode
+The blog opens in a dark, minimal writing theme. Use the footer's Light mode / Dark mode
 button to switch; the choice is saved locally. Blog pages use one contextual
-back link: Main site on the list, All posts on an article.
+back link: Main site on the list, All posts on an article. Astro view transitions
+connect post titles to their article headings. Fine pointers get a subtle hover
+highlight; reduced-motion preferences disable animations and pointer effects.
 
 ```sh
 npm run check       # Astro, TypeScript and content-schema checks
@@ -220,6 +222,9 @@ runs checks/tests/history validation, builds `dist/`, verifies the generated
 site, uploads it and deploys it with GitHub Pages. Deployment is limited to
 `main`. In repository **Settings → Pages**, keep **Source** set to
 **GitHub Actions**.
+
+An RSS feed lets readers follow new posts in a feed-reader app. The footer
+links to this feed; it is not an email signup.
 
 The existing homepage, `/about/`, `/blog/` and all three published blog URLs
 are preserved; redirects are unnecessary. RSS is available at `/rss.xml` and

@@ -1,15 +1,15 @@
 ---
-import { formatDate, postUrl, publicationDay, type BlogPost } from '../lib/blog';
+import { formatDate, postUrl, publicationDay, postTransitionName, type BlogPost } from '../lib/blog';
 interface Props { posts: BlogPost[] }
 const { posts } = Astro.props;
 ---
 <ol class="post-list">
   {posts.map((post, index) => (
-    <li>
+    <li class="post-entry" style={`--entry-delay: ${Math.min(index, 4) * 50}ms`}>
       <span class="entry-number" aria-hidden="true">{String(posts.length - index).padStart(2, '0')}</span>
       <div class="entry-content">
         <time datetime={publicationDay(post)}>{formatDate(post.data.pubDate)}</time>
-        <h3><a href={postUrl(post)}>{post.data.title}<span class="entry-arrow" aria-hidden="true">↗</span></a></h3>
+        <h3><a href={postUrl(post)}><span transition:name={postTransitionName(post)} transition:animate="initial">{post.data.title}</span><span class="entry-arrow" aria-hidden="true">↗</span></a></h3>
         {post.data.description && <p>{post.data.description}</p>}
       </div>
     </li>
