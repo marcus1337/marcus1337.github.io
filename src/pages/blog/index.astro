@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
-import EditorialMotion from '../../components/EditorialMotion.astro';
 import { BLOG_DESCRIPTION } from '../../consts';
 import { getPublishedPosts } from '../../lib/blog';
 import '../../styles/blog.css';
@@ -15,9 +14,8 @@ const posts = await getPublishedPosts();
   <section class="entries-section" aria-labelledby="entries-heading">
     <div class="entries-heading">
       <h2 id="entries-heading">Posts</h2>
-      <span>{String(posts.length).padStart(2, '0')} {posts.length === 1 ? 'post' : 'posts'}</span>
+      <span>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</span>
     </div>
     {posts.length ? <PostList posts={posts} /> : <p>No posts yet.</p>}
   </section>
-  <EditorialMotion />
 </BaseLayout>

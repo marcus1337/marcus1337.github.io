@@ -1,28 +1,19 @@
-.journal-intro { position: relative; isolation: isolate; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: 20px 0 40px; margin-bottom: 32px; border-bottom: 1px solid var(--line); }
-.journal-intro::before { content: ''; position: absolute; z-index: -1; pointer-events: none; inset: -60px -30px -20px; background: radial-gradient(260px circle at var(--pointer-x, 35%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 7%, transparent), transparent 75%); opacity: 0; transition: opacity 350ms ease; }
-.journal-intro.pointer-active::before { opacity: 1; }
-.journal-title { font-size: clamp(5rem, 13vw, 9.5rem); line-height: .92; font-weight: 550; letter-spacing: -.075em; margin: 0; animation: title-arrive 600ms cubic-bezier(.2,.8,.2,1) both; }
+.journal-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding: 8px 0 28px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.journal-title { font-size: clamp(4.5rem, 9vw, 6.5rem); line-height: .96; font-weight: 550; letter-spacing: -.07em; margin: 0; }
 .title-dot { color: var(--accent); }
-.lede { max-width: 23ch; color: var(--muted); font-size: .96rem; line-height: 1.65; margin: 0 0 6px; animation: entry-arrive 650ms ease both; }
-@keyframes title-arrive { from { opacity: .2; transform: translateY(16px); filter: blur(3px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-@keyframes entry-arrive { from { opacity: .4; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.entries-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-bottom: 16px; }
+.lede { max-width: 23ch; color: var(--muted); font-size: .96rem; line-height: 1.65; margin: 0 0 4px; }
+.entries-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-bottom: 12px; }
 .entries-heading h2, .entries-heading > span { font-family: var(--font-mono); font-size: .72rem; font-weight: 400; color: var(--muted); letter-spacing: .04em; margin: 0; }
 .entries-heading h2 { text-transform: uppercase; }
 .post-list { list-style: none; padding: 0; margin: 0; border-bottom: 1px solid var(--line); }
-.post-list > li { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 26px; padding: 28px 8px 30px 0; isolation: isolate; animation: entry-arrive 450ms ease var(--entry-delay, 0ms) both; border-top: 1px solid var(--line); }
-.post-entry::before { content: ''; position: absolute; z-index: -1; pointer-events: none; inset: 0 -16px; border-radius: 3px; background: radial-gradient(420px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 8%, transparent), transparent 75%); opacity: 0; transition: opacity 250ms ease; }
-.post-entry.pointer-active::before, .post-entry:focus-within::before { opacity: 1; }
-.post-entry:focus-within::before { background: var(--panel); }
-.entry-number { padding-top: 3px; color: var(--muted); font-family: var(--font-mono); font-size: .72rem; font-variant-numeric: tabular-nums; }
+.post-list > li { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 28px; padding: 12px 0; border-top: 1px solid var(--line); }
 .entry-content { min-width: 0; }
-.post-list time { display: block; margin-bottom: 12px; color: var(--muted); font-family: var(--font-mono); font-size: .7rem; }
-.post-list h3 { margin: 0; font-size: clamp(1.45rem, 3vw, 1.95rem); font-weight: 550; line-height: 1.25; }
-.post-list h3 a { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; min-height: 44px; color: var(--fg); text-decoration: none; transition: color 160ms ease; }
+.post-list time { display: block; padding-top: 12px; color: var(--muted); font-family: var(--font-mono); font-size: .7rem; line-height: 1.7; }
+.post-list h3 { margin: 0; font-size: clamp(1.2rem, 2vw, 1.4rem); font-weight: 550; line-height: 1.3; }
+.post-list h3 a { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; color: var(--fg); text-decoration: none; transition: color 120ms ease; }
 .post-list h3 a:hover { color: var(--accent); }
-.entry-arrow { flex-shrink: 0; color: var(--accent); font-family: var(--font-mono); font-size: 1.1rem; transition: transform 160ms ease; }
-.post-list h3 a:hover .entry-arrow { transform: translate(2px, -2px); }
-.post-list p { max-width: 60ch; margin: 12px 36px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.7; }
+.entry-arrow { flex-shrink: 0; color: var(--muted); font-family: var(--font-mono); font-size: .95rem; }
+.post-list p { margin: 2px 32px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.6; }
 .post-header { padding-bottom: 30px; margin-bottom: 38px; border-bottom: 1px solid var(--line); }
 .post-header h1 { max-width: 22ch; }
 .post-description { color: var(--muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 24px; }
@@ -60,17 +51,14 @@
 .post-body .mermaid-figure details { margin-top: .6rem; }
 :root:not([data-theme="light"]) .astro-code, :root:not([data-theme="light"]) .astro-code span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; font-style: var(--shiki-dark-font-style) !important; font-weight: var(--shiki-dark-font-weight) !important; text-decoration: var(--shiki-dark-text-decoration) !important; }
 @media (max-width: 640px) {
-  .journal-intro { align-items: start; flex-direction: column; gap: 24px; padding-block: 12px 32px; margin-bottom: 26px; }
-  .journal-title { font-size: clamp(4.75rem, 19vw, 7rem); }
+  .journal-intro { align-items: start; flex-direction: column; gap: 16px; padding-block: 8px 24px; margin-bottom: 20px; }
+  .journal-title { font-size: clamp(3.5rem, 16vw, 5rem); }
   .lede { font-size: .92rem; max-width: none; }
-  .post-list > li { grid-template-columns: 28px minmax(0, 1fr); gap: 14px; padding-block: 24px 28px; }
-  .post-list time { font-size: .65rem; }
+  .post-list > li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: 12px; }
+  .post-list time { padding-top: 0; font-size: .68rem; }
   .post-list h3 a { gap: 12px; }
-  .post-list p { font-size: .88rem; margin-right: 12px; }
+  .post-list p { font-size: .85rem; margin-right: 28px; }
   .post-header { margin-bottom: 30px; }
   .post-body { font-size: 1rem; }
   .post-body pre { padding: .9rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .journal-intro::before, .post-entry::before { display: none; }
 }

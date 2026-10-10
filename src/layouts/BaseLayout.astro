@@ -19,7 +19,7 @@ const { index = false, ...metadata } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" transition:name="root" transition:animate="none">
   <head>
     <BaseHead {...metadata} />
     <ClientRouter fallback="swap" />
@@ -37,7 +37,7 @@ const { index = false, ...metadata } = Astro.props;
     <a class="skip-link" href="#main-content">Skip to content</a>
     <BlogHeader />
     <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1"
-      transition:name="blog-content" transition:animate={fade({ duration: '180ms' })}>
+      transition:name="blog-content" transition:animate={fade({ duration: '140ms' })}>
       <slot />
     </main>
     <Footer />

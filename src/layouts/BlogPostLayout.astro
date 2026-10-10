@@ -3,7 +3,6 @@ import BaseLayout from './BaseLayout.astro';
 import PostMetadata from '../components/PostMetadata.astro';
 import PostHistory from '../components/PostHistory.astro';
 import type { BlogPost } from '../lib/blog';
-import { postTransitionName } from '../lib/blog';
 import type { PostCommit } from '../lib/post-history.mjs';
 import '../styles/blog.css';
 
@@ -14,7 +13,7 @@ const { post, history } = Astro.props;
   publishedTime={post.data.pubDate.toISOString()} modifiedTime={post.data.updatedDate?.toISOString()}>
   <article class="blog-article">
     <header class="post-header">
-      <h1 transition:name={postTransitionName(post)} transition:animate="initial">{post.data.title}</h1>
+      <h1>{post.data.title}</h1>
       {post.data.description && <p class="post-description">{post.data.description}</p>}
       <PostMetadata pubDate={post.data.pubDate} updatedDate={post.data.updatedDate} tags={post.data.tags} />
     </header>

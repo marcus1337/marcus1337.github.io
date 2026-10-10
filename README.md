@@ -19,9 +19,11 @@ npm run dev
 Open the local URL printed by Astro, normally `http://localhost:4321`.
 The blog opens in a dark, minimal writing theme. Use the footer's Light mode / Dark mode
 button to switch; the choice is saved locally. Blog pages use one contextual
-back link: Main site on the list, All posts on an article. Astro view transitions
-connect post titles to their article headings. Fine pointers get a subtle hover
-highlight; reduced-motion preferences disable animations and pointer effects.
+back link: Main site on the list, All posts on an article. The post list uses
+compact rows, with dates beside titles on desktop and above them on mobile.
+Navigation uses a brief content fade; reduced-motion preferences disable it.
+Hovering a title changes only its colour. There are no cursor-tracking effects
+or animated entrances.
 
 ```sh
 npm run check       # Astro, TypeScript and content-schema checks
