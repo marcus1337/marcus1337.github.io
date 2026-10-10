@@ -21,7 +21,8 @@ The blog opens in a dark, minimal writing theme. Use the footer's Light mode / D
 button to switch; the choice is saved locally. Blog pages use one contextual
 back link: Main site on the list, All posts on an article. The post list uses
 compact rows, with dates beside titles on desktop and above them on mobile.
-Navigation uses a brief content fade; reduced-motion preferences disable it.
+Navigation fades the current page out, then the next page in, in both
+directions. The transition takes 350ms; reduced-motion preferences disable it.
 Hovering a title changes only its colour. There are no cursor-tracking effects
 or animated entrances.
 

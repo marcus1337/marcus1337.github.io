@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import BlogHeader from '../components/BlogHeader.astro';
 import Footer from '../components/Footer.astro';
-import { ClientRouter, fade } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -16,10 +16,16 @@ interface Props {
 }
 
 const { index = false, ...metadata } = Astro.props;
+
+const contentFade = {
+  old: { name: 'astroFadeOut', duration: '130ms', easing: 'ease-in', fillMode: 'both' },
+  new: { name: 'astroFadeIn', duration: '220ms', delay: '130ms', easing: 'ease-out', fillMode: 'both' },
+};
+const pageTransition = { forwards: contentFade, backwards: contentFade };
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark" transition:name="root" transition:animate="none">
+<html lang="en" data-theme="dark" transition:name="root" transition:animate={pageTransition}>
   <head>
     <BaseHead {...metadata} />
     <ClientRouter fallback="swap" />
@@ -36,8 +42,7 @@ const { index = false, ...metadata } = Astro.props;
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <BlogHeader />
-    <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1"
-      transition:name="blog-content" transition:animate={fade({ duration: '140ms' })}>
+    <main id="main-content" class:list={['site-main', { 'index-page': index }]} tabindex="-1">
       <slot />
     </main>
     <Footer />
