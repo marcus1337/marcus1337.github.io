@@ -18,8 +18,8 @@ interface Props {
 const { index = false, ...metadata } = Astro.props;
 
 const contentFade = {
-  old: { name: 'astroFadeOut', duration: '130ms', easing: 'ease-in', fillMode: 'both' },
-  new: { name: 'astroFadeIn', duration: '220ms', delay: '130ms', easing: 'ease-out', fillMode: 'both' },
+  old: { name: 'astroFadeOut', duration: '250ms', easing: 'ease-in-out', fillMode: 'both' },
+  new: { name: 'astroFadeIn', duration: '250ms', easing: 'ease-in-out', fillMode: 'both' },
 };
 const pageTransition = { forwards: contentFade, backwards: contentFade };
 ---
