@@ -48,6 +48,8 @@
 .post-body .mermaid-figure { margin: 1.8rem 0; }
 .post-body .mermaid-graph { border: 1px solid var(--line); border-radius: 4px; padding: 1rem; overflow-x: auto; text-align: center; background: var(--panel); }
 .post-body .mermaid-graph svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.post-body .wide-diagram { --diagram-width: min(1200px, calc(100vw - 48px)); width: var(--diagram-width); margin-inline: calc((100% - var(--diagram-width)) / 2); }
+.post-body .wide-diagram .mermaid-graph svg { min-width: 1056px; }
 .post-body .mermaid-figure details { margin-top: .6rem; }
 :root:not([data-theme="light"]) .astro-code, :root:not([data-theme="light"]) .astro-code span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; font-style: var(--shiki-dark-font-style) !important; font-weight: var(--shiki-dark-font-weight) !important; text-decoration: var(--shiki-dark-text-decoration) !important; }
 @media (max-width: 640px) {
